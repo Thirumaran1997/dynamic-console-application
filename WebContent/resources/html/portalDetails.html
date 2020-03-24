@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<style>
+input[type=text] {
+/*   width: 130px; */
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(odd){background-color: #e67e22}
+
+th {
+/*   background-color: #4CAF50; */
+  background-color: #e67e22;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<input type="text" class="search-box" style="margin-top:16px; margin-left:480px;" width=50%; 
+name="search" placeholder="Search by Application Name,Class name"></input>
+<table id="userTable">
+  <tr>
+  	<th>Id</th>
+    <th>Application Name</th>
+    <th>Class Name</th>
+    <th>Method Name</th>
+    <th>Parameters</th>
+    <th>Executable JAR Path</th>
+    <th>Comments</th>
+    <th>Run App</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  <tr ng-repeat="application in userDetails">
+	<td>{{application.id}}</td>
+    <td>{{application.applicationName}}</td>
+    <td>{{application.className}}</td>
+    <td>{{application.methodName}}</td>
+    <td>{{application.parameter}}</td>
+    <td>{{application.deployPath}}</td>
+    <td>{{application.comments}}</td>
+    <td>
+    <a class="play" title="Run" data-toggle="tooltip" ng-click="runApplication()"><i class="material-icons">play_arrow</i></a>
+    </td>
+    <td>
+    <a class="edit" title="Edit" data-toggle="tooltip" ng-click="editRecord()"><i class="material-icons">&#xE254;</i></a>
+    </td>
+    <td>
+    <a class="delete" title="Delete" ng-click="deleteRecord()" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

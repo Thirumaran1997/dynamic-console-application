@@ -1,17 +1,31 @@
 package com.dynamicconsole.service.impl;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.maven.shared.invoker.DefaultInvocationRequest;
+import org.apache.maven.shared.invoker.DefaultInvoker;
+import org.apache.maven.shared.invoker.InvocationRequest;
+import org.apache.maven.shared.invoker.InvocationResult;
+import org.apache.maven.shared.invoker.Invoker;
 import org.springframework.stereotype.Service;
 
 import com.dynamicconsole.model.ConsoleDetails;
@@ -107,6 +121,55 @@ public class ConsoleServiceImpl implements ConsoleService {
 			e.printStackTrace();
 		}
 		return returnMap;
+	}
+	
+	private void executeMavenProcess(String filePath) throws Exception {
+		File tempPomFile = File.createTempFile("pom", ".xml");
+		File currentPomFile = new File(System.getProperty("user.dir")+"/pom.xml");
+		FileUtils.copyFile(currentPomFile,tempPomFile);
+		Path path = Paths.get(filePath); 
+	    String fileName = path.getFileName().toString(); 
+		try{
+		    FileReader fileReader = new FileReader(currentPomFile);
+		    String currentLine;
+		    String totalStr = "";
+		    try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+		        while ((currentLine = bufferedReader.readLine()) != null) {
+		            totalStr += currentLine;
+		        }
+				totalStr = totalStr.replaceAll("</dependencies>", "<dependency>"
+		        		+ "<groupId>"+fileName+"</groupId>"
+		        		+ "<artifactId>"+fileName+"</artifactId>"
+		        		+ "<version>1.0</version></dependency>"
+		        		+ "<scope>system</scope>"
+		        		+ "<systemPath>"+filePath+"</systemPath>"
+		        		+"</dependency>"
+		        		+ "</dependencies>");
+		        FileWriter fileWriter = new FileWriter(tempPomFile);
+		        fileWriter.write(totalStr);
+		        fileWriter.close();
+		    }
+		}catch(Exception e){
+		    e.printStackTrace();
+		}
+		
+	    InvocationRequest mavenRequest = new DefaultInvocationRequest();
+	    mavenRequest.setPomFile(tempPomFile);
+	    mavenRequest.setBaseDirectory(tempPomFile.getParentFile());
+//	    mavenRequest.setLocalRepositoryDirectory(repoDir);
+	    mavenRequest.setGoals(Arrays.asList("clean", "install"));
+	    mavenRequest.setMavenOpts("-Dfile="+filePath+" -DgroupId="+fileName+" -DartifactId="+fileName+" -Dversion=1.0 -Dpackaging=jar");
+
+	    Invoker invoker = new DefaultInvoker();
+	    try {
+	        InvocationResult result = invoker.execute(mavenRequest);
+	        if (result.getExitCode() != 0) {
+	            throw result.getExecutionException() != null ? result.getExecutionException()
+	                    : new IllegalStateException("Build failure: " + result.getExitCode());
+	        }
+	    } catch (Exception e) {
+	    	System.out.println(e.getMessage());
+	    }
 	}
 
 }

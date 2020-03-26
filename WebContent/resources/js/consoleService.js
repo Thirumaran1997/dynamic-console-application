@@ -51,6 +51,13 @@ App.factory('consoleService', function($http, $q) {
         	.then(function(response){
         		return response;
         	});
+        },
+        
+        runApplication: function(data){
+        	return $http.post('runApplication',data)
+        	.then(function(response){
+        		return response;
+        	});
         }
 
     };

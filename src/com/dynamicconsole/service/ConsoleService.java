@@ -13,6 +13,9 @@ public interface ConsoleService {
 
 	Map<String, Object> updateAppDetails(Map appDetailsMap) throws ClassNotFoundException;
 
-	Map<String, Object> deleteAppDetails(Map appDetailsMap) throws ClassNotFoundException;;
+	Map<String, Object> deleteAppDetails(Map appDetailsMap) throws ClassNotFoundException;
+
+	Map<String, Object> runApplication(Map appDetailsMap, HttpServletRequest request) throws Exception;
+
 
 }

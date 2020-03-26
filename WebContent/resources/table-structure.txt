@@ -2,20 +2,17 @@ CREATE DATABASE consoleAppDb;
 CREATE TABLE application_details (
     application_id int NOT NULL AUTO_INCREMENT,
     application_name varchar(255) NOT NULL,
-    class_name varchar(255) NOT NULL,
-    method_name varchar(255) NOT NULL,
     parameters varchar(255) NOT NULL,
     comments varchar(255) ,
     deploy_path varchar(255) NOT NULL,
     PRIMARY KEY (application_id)
 );
 
++------------------+--------------+------+-----+---------+----------------+
 | Field            | Type         | Null | Key | Default | Extra          |
 +------------------+--------------+------+-----+---------+----------------+
 | application_id   | int(11)      | NO   | PRI | NULL    | auto_increment |
 | application_name | varchar(255) | NO   |     | NULL    |                |
-| class_name       | varchar(255) | NO   |     | NULL    |                |
-| method_name      | varchar(255) | NO   |     | NULL    |                |
 | parameters       | varchar(255) | NO   |     | NULL    |                |
 | comments         | varchar(255) | YES  |     | NULL    |                |
 | deploy_path      | varchar(255) | NO   |     | NULL    |                |

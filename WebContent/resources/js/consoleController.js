@@ -8,14 +8,16 @@ App.controller('consoleController', ['$scope', '$rootScope', 'consoleService','$
         	$scope.isPortalPage = true;
         	$scope.isDetailPage = false;
         	$scope.isInsertMode = true;
+        	$scope.isExecutionMode = false;
                				
 			$scope.initialize = function(){
 				$scope.detail['applicationName'] ="";
-	        	$scope.detail['className'] ="";
-	        	$scope.detail['methodName'] ="";
+//	        	$scope.detail['className'] ="";
+//	        	$scope.detail['methodName'] ="";
 	        	$scope.detail['parameters'] ="";
 	        	$scope.detail['deployPath'] ="";
 	        	$scope.detail['comments'] ="";
+	        	$scope.detail['executionOut']="Your code execution output comes here...";
 			}
 			
 			$scope.getUserDetails = function() {
@@ -32,6 +34,7 @@ App.controller('consoleController', ['$scope', '$rootScope', 'consoleService','$
 				$scope.isPortalPage = false;
 				$scope.isInsertMode = true;
 				$scope.isUpdateMode = false;
+	        	$scope.isExecutionMode = false;
 			}
 			
 			$scope.insertRecords = function(){
@@ -54,16 +57,17 @@ App.controller('consoleController', ['$scope', '$rootScope', 'consoleService','$
 			$scope.editRecord = function(){
 				$scope.isPortalPage = false;
 	        	$scope.isDetailPage = true;
+	        	$scope.isExecutionMode = false;
 				$scope.isInsertMode = false;
 				$scope.isUpdateMode = true;
 				var row  = event.currentTarget.closest('tr');
 				$scope.detail['applicationId'] = row.cells[0].textContent;
 				$scope.detail['applicationName'] = row.cells[1].textContent;
-	        	$scope.detail['className'] =row.cells[2].textContent;
-	        	$scope.detail['methodName'] =row.cells[3].textContent;
-	        	$scope.detail['parameters'] =row.cells[4].textContent;
-	        	$scope.detail['deployPath'] =row.cells[5].textContent;
-	        	$scope.detail['comments'] =row.cells[6].textContent;
+//	        	$scope.detail['className'] =row.cells[2].textContent;
+//	        	$scope.detail['methodName'] =row.cells[3].textContent;
+	        	$scope.detail['parameters'] =row.cells[2].textContent;
+	        	$scope.detail['deployPath'] =row.cells[3].textContent;
+	        	$scope.detail['comments'] =row.cells[4].textContent;
 			}
 			
 			$scope.updateRecords = function(){
@@ -94,4 +98,27 @@ App.controller('consoleController', ['$scope', '$rootScope', 'consoleService','$
 						});
 			}
 			
+			$scope.runApplication = function(){
+				$scope.isPortalPage = false;
+	        	$scope.isDetailPage = true;
+	        	$scope.isExecutionMode = true;
+				$scope.isInsertMode = false;
+				$scope.isUpdateMode = false;
+				var row  = event.currentTarget.closest('tr');
+//				$scope.detail['className'] =row.cells[2].textContent;
+//	        	$scope.detail['methodName'] =row.cells[3].textContent;
+	        	$scope.detail['parameters'] =row.cells[2].textContent;
+	        	$scope.detail['deployPath'] =row.cells[3].textContent;
+				consoleService.runApplication($scope.detail).then(
+						function(response){
+							if(response['data']['status']==='pass'){
+								$scope.showUserDetails = true;
+								$scope.inputUserDetails = false;
+								$scope.detail['executionOut'] = response['data']['message'];
+							}else if(response['data']['status']==='fail'){
+								alert('An error occurred!');
+								$scope.detail['executionOut'] = response['data']['message'];
+							}
+						});
+			}
 		} ]);

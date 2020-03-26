@@ -31,25 +31,25 @@ th {
 <body>
 
 <input type="text" class="search-box" style="margin-top:16px; margin-left:480px;" width=50%; 
-name="search" placeholder="Search by Application Name,Class name"></input>
+name="search" placeholder="Search by Application Name"></input>
 <table id="userTable">
   <tr>
   	<th>Id</th>
     <th>Application Name</th>
-    <th>Class Name</th>
-    <th>Method Name</th>
+<!--     <th>Class Name</th> -->
+<!--     <th>Method Name</th> -->
     <th>Parameters</th>
     <th>Executable JAR Path</th>
     <th>Comments</th>
-    <th>Run App</th>
+    <th>Run Application</th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
   <tr ng-repeat="application in userDetails">
 	<td>{{application.id}}</td>
     <td>{{application.applicationName}}</td>
-    <td>{{application.className}}</td>
-    <td>{{application.methodName}}</td>
+<!--     <td>{{application.className}}</td> -->
+<!--     <td>{{application.methodName}}</td> -->
     <td>{{application.parameter}}</td>
     <td>{{application.deployPath}}</td>
     <td>{{application.comments}}</td>

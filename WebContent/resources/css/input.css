@@ -187,3 +187,7 @@ input[type="password"] {
 .search-box{
 	width:40%;
 }
+
+.fillpageTextArea{
+	width:90%; !important
+}

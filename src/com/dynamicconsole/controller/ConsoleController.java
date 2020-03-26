@@ -1,12 +1,9 @@
 package com.dynamicconsole.controller;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,6 +47,13 @@ public class ConsoleController {
 	public ResponseEntity delete(@RequestBody String appDetails,HttpServletRequest request) throws ClassNotFoundException {
         Map appDetailsMap = new Gson().fromJson(appDetails, Map.class);
 		Map<String,Object> returnMap = consoleService.deleteAppDetails(appDetailsMap);
+		return new ResponseEntity(returnMap, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/runApplication", method = RequestMethod.POST)
+	public ResponseEntity runApplication(@RequestBody String appDetails,HttpServletRequest request) throws Exception {
+        Map appDetailsMap = new Gson().fromJson(appDetails, Map.class);
+		Map<String,Object> returnMap = consoleService.runApplication(appDetailsMap,request);
 		return new ResponseEntity(returnMap, HttpStatus.OK);
 	}
 }

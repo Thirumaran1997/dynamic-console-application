@@ -1,23 +1,24 @@
 <link rel="stylesheet" href="css/input.css">
 <div class="wrapper" style="margin-top:16px; margin-left:16px">
+  <div ng-show = !isExecutionMode>
   <form>
-    <h1 ng-show="isInsertMode" style="position:fixed; top:4px;">Create Application</h1>
-    <h1 ng-show="isUpdateMode" style="position:fixed; top:4px;">Modify Application</h1>
+    <h1 ng-show="isInsertMode" style="top:16px;">Create Application</h1>
+    <h1 ng-show="isUpdateMode" style="top:16px;">Modify Application</h1>
     <div class="group" style="margin-left:400px">
       <label>Application Name</label>
       <input type="text" ng-model="detail.applicationName" placeholder="Application Name" class="fillpage" required="required"/><span class="highlight"></span><span class="bar"></span>
     </div>
-    <div class="group" style="margin-left:400px">
-      <label>Class Name</label>
-      <input type="text" placeholder="com.developer.controller.Test" ng-model="detail.className" class="fillpage" required="required"/><span class="highlight"></span><span class="bar"></span>
-    </div>
-    <div class="group" style="margin-left:400px">
-      <label>Method Name</label>
-      <input type="text" placeholder="updatePortalRecord" ng-model="detail.methodName" class="fillpage" required="required"/><span class="highlight"></span><span class="bar"></span>
-    </div>
+<!--     <div class="group" style="margin-left:400px"> -->
+<!--       <label>Class Name</label> -->
+<!--       <input type="text" placeholder="com.developer.controller.Test" ng-model="detail.className" class="fillpage" required="required"/><span class="highlight"></span><span class="bar"></span> -->
+<!--     </div> -->
+<!--     <div class="group" style="margin-left:400px"> -->
+<!--       <label>Method Name</label> -->
+<!--       <input type="text" placeholder="updatePortalRecord" ng-model="detail.methodName" class="fillpage" required="required"/><span class="highlight"></span><span class="bar"></span> -->
+<!--     </div> -->
     <div class="group" style="margin-left:400px">
       <label>Parameters</label>
-      <input type="text" placeholder="{'value'='2','name'='Test'}" ng-model="detail.parameters" class="fillpage" required="required"/><span class="highlight"></span><span class="bar"></span>
+      <input type="text" placeholder="Specify parameters separated by space" ng-model="detail.parameters" class="fillpage" required="required"/><span class="highlight"></span><span class="bar"></span>
     </div>
     <div class="group" style="margin-left:400px">
       <label>Target Jar Path</label>
@@ -30,7 +31,15 @@
     <div class="btn-box" style="margin-left:1178px; position:fixed; top:-10px;">
       <button class="btn btn-success" type="submit" ng-show="isInsertMode" ng-click="insertRecords()">Submit</button>
       <button class="btn btn-warning" type="submit" ng-show="isUpdateMode" ng-click="updateRecords()">Update</button>
-      <button class="btn btn-cancel btn-danger" ng-click="onCancel()" type="button">Cancel</button>
+      <button class="btn btn-cancel btn-danger" ng-click="onCancel()" type="button">Back</button>
     </div>
   </form>
+  </div>
+  <div ng-show=isExecutionMode>
+  <h1 style="top:4px;">Execution Logs</h1>
+  	<button style="margin-left:1268px;" class="btn btn-warning" ng-click="onCancel()">Back</button>
+  	<div class="group" style="margin-left:100px;">
+      <textarea type="textarea" ng-model="detail.executionOut" ng-disabled=isExecutionMode rows="24" class="fillpageTextArea"></textarea><span class="highlight"></span><span class="bar"></span>
+    </div>
+  </div>  
 </div>

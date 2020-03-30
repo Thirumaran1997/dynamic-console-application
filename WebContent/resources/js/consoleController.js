@@ -121,4 +121,18 @@ App.controller('consoleController', ['$scope', '$rootScope', 'consoleService','$
 							}
 						});
 			}
+			
+			$scope.uploadFiles = function(){
+				var uploadUrl="localhost:8080/DynamicConsoleApplication/upload";
+				var formData=new FormData();
+				formData.append("file",file.files[0]);
+				$http.post('upload',formData,{
+		            transformRequest: angular.identity,
+		            headers: {'Content-Type': undefined}
+		        })
+	        	.then(function(response){
+	        		return response;
+	        	});
+			}
+			
 		} ]);

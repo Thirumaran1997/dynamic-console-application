@@ -10,6 +10,9 @@ crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.9/angular.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" 
 integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
 <body ng-app="app" data-ng-init="getUserDetails()" ng-controller="consoleController" style="background-image: url('css/login-background.png'); background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 100% 100%;">
@@ -19,7 +22,9 @@ integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0Vx
 		<button class="btn btn-rounded btn-success" ng-click=createNewApplication() ng-show="isPortalPage">+
 		</button>
 	</div>
-	<script>var App = angular.module('app',[]);</script>
+	<script>var App = angular.module('app',[]);
+	var stompClient = null;
+	</script>
 	<script src="js/consoleService.js"></script>
 	<script src="js/consoleController.js"></script>
 </body>

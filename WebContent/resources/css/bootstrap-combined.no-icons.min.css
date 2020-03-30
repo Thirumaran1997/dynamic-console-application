@@ -1397,13 +1397,12 @@ input[type="radio"], input[type="checkbox"] {
 
 input[type="file"], input[type="image"], input[type="submit"], input[type="reset"],
 	input[type="button"], input[type="radio"], input[type="checkbox"] {
-	width: auto;
+	width: 125px;
 }
 
 select, input[type="file"] {
-	height: 30px;
-	*margin-top: 4px;
-	line-height: 30px;
+	height: 45px;
+/* 	*margin-top: 4px; */
 }
 
 select {

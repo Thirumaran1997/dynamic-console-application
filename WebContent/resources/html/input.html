@@ -34,7 +34,10 @@
       <button class="btn btn-cancel btn-danger" ng-click="onCancel()" type="button">Back</button>
     </div>
   </form>
-  </div>
+  <form method="POST" action="upload" enctype="multipart/form-data" style="margin-left:416px">
+	 <input type="file" name="file" id="file" onchange="angular.element(this).scope().uploadFiles()" /> <br/>
+<!--      <input class="filebtn btn" type="submit" value="Upload" name="upload" id="upload" /> -->
+  </form>
   <div ng-show=isExecutionMode>
   <h1 style="top:4px;">Execution Logs</h1>
   	<button style="margin-left:1268px;" class="btn btn-warning" ng-click="onCancel()">Back</button>

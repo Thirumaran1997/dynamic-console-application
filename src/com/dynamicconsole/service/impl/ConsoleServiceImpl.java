@@ -1,11 +1,6 @@
 package com.dynamicconsole.service.impl;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -14,25 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.maven.shared.invoker.DefaultInvocationRequest;
-import org.apache.maven.shared.invoker.DefaultInvoker;
-import org.apache.maven.shared.invoker.InvocationRequest;
-import org.apache.maven.shared.invoker.InvocationResult;
-import org.apache.maven.shared.invoker.Invoker;
-import org.apache.maven.shared.utils.cli.CommandLineException;
 import org.springframework.stereotype.Service;
 
 import com.dynamicconsole.model.ConsoleDetails;
 import com.dynamicconsole.service.ConsoleService;
-import com.google.gson.Gson;
 
 @Service
 public class ConsoleServiceImpl implements ConsoleService {
@@ -126,7 +110,7 @@ public class ConsoleServiceImpl implements ConsoleService {
 	}	
 	
 	@Override
-	public Map<String, Object> runApplication(Map appDetailMap, HttpServletRequest request) throws Exception {
+	public Map<String, Object> runApplication(Map appDetailMap) throws Exception {
 		Map<String,Object> paramMap = new HashMap<>();
 		paramMap.put("status","pass");
 		String parameters = (String) appDetailMap.get("parameters");
@@ -134,9 +118,9 @@ public class ConsoleServiceImpl implements ConsoleService {
 		Path path = Paths.get(deploy_path);
 		String fileName = path.getFileName().toString();
 		Process proc = Runtime.getRuntime().exec("java -jar "+path.toString()+" "+parameters);
+		InputStream in = proc.getInputStream();
+		InputStream err = proc.getErrorStream();
 	    proc.waitFor();
-	    InputStream in = proc.getInputStream();
-	    InputStream err = proc.getErrorStream();
 	    byte b[]=new byte[in.available()];
 	    in.read(b,0,b.length);
 	    System.out.println(new String(b));
